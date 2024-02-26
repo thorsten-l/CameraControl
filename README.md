@@ -4,5 +4,4 @@ WiFi conectivity ist prepared but not implemented yet.
 
 Now im implementing WiFi Canon Connect API. (all newer Canon cameras like Rxxx or M6m2)
 
-At least i like to implement the Picture Transfer Protocol via IP. (PTP/IP)
-
+The last thing I want to do is to implement the Picture Transfer Protocol via IP. (PTP/IP)
