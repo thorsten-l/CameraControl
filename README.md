@@ -20,9 +20,21 @@ The last thing I want to do is to implement the Picture Transfer Protocol via IP
 
 # Screeshots
 
+## Start screen
+
 ![start](docs/start.png)
+
+## Bluetooth remote control screen
 
 ![remote](docs/remote.png)
 
+## Intervalometer
+
 ![interval](docs/interval.png)
 
+- #P : number of pictures to take
+
+- IvT : Interval time between shots
+
+- XpT : Exposure time, if XpT > IvT then IvT is set to 0s. Setting the Exposure time only makes sense in *BULB* mode. Minimum time between shots is 4s.
+  
