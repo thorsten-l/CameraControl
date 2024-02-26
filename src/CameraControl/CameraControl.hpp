@@ -32,10 +32,6 @@ public:
 
 class BTCameraControl : public CameraControl
 {
-protected:
-  bool paired = false;
-  bool connected = false;
-
 public:
   virtual int pairing() = 0;
   virtual bool isPaired() = 0;
@@ -44,10 +40,6 @@ public:
 
 class WifiCameraControl : public CameraControl
 {
-protected:
-  bool paired = false;
-  bool connected = false;
-
 public:
   virtual int connect(String ssid, String password) = 0;
 };
