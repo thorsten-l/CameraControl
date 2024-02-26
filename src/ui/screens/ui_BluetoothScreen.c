@@ -92,7 +92,7 @@ ui_Label12 = lv_label_create(ui_BTHalfPressButton);
 lv_obj_set_width( ui_Label12, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_Label12, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_align( ui_Label12, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Label12,"Autofokus");
+lv_label_set_text(ui_Label12,"Autofocus");
 
 ui_BTFullPressButton = lv_btn_create(ui_BTRemoteTabPage);
 lv_obj_set_width( ui_BTFullPressButton, 100);

@@ -2,12 +2,11 @@
 #include <ArduinoNvs.h>
 
 #include <alog.h>
-#include <bt/BluetoothController.h>
-#include <CCUI/CCUI.hpp>
 #include <esp32_smartdisplay.h>
 #include <math.h>
-#include <Settings/Settings.hpp>
 #include <ui/ui.h>
+#include <CCUI/CCUI.hpp>
+#include <CCUI/Controller/Settings.hpp>
 
 #define APPNVS_WIFI_API_TYPE "wifiapi"
 

@@ -22,9 +22,9 @@ void btHalfPressedPressed(lv_event_t * e);
 void btHalfPressedReleased(lv_event_t * e);
 void btFullPressedPressed(lv_event_t * e);
 void btFullPressedReleased(lv_event_t * e);
-void btIntervalStartButtonClicked(lv_event_t * e);
-void btIntervalPauseButtonClicked(lv_event_t * e);
-void btIntervalStopButtonClicked(lv_event_t * e);
+void intervalStartButtonClicked(lv_event_t * e);
+void intervalPauseButtonClicked(lv_event_t * e);
+void intervalStopButtonClicked(lv_event_t * e);
 void calPointPressed(lv_event_t * e);
 void calStartButtonClicked(lv_event_t * e);
 

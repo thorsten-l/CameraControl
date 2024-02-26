@@ -236,19 +236,19 @@ if ( event_code == LV_EVENT_RELEASED) {
 void ui_event_BTIntStartButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      btIntervalStartButtonClicked( e );
+      intervalStartButtonClicked( e );
 }
 }
 void ui_event_BTIntPauseButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      btIntervalPauseButtonClicked( e );
+      intervalPauseButtonClicked( e );
 }
 }
 void ui_event_BTIntStopButton( lv_event_t * e) {
     lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
 if ( event_code == LV_EVENT_CLICKED) {
-      btIntervalStopButtonClicked( e );
+      intervalStopButtonClicked( e );
 }
 }
 void ui_event_CalHomeButton2( lv_event_t * e) {

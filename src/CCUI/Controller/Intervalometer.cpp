@@ -2,182 +2,25 @@
 #include <alog.h>
 #include <CameraControl/CameraControl.hpp>
 #include <CCUI/CCUI.hpp>
-#include <ui/ui.h>
+#include <CCUI/Controller/Intervalometer.hpp>
 
-#define SHUTTER_PAUSE_TIME 250
-
-#define INTERVAL_STATE_IDLE 0
-
-#define INTERVAL_STATE_IVT_IDLE 1
-#define INTERVAL_STATE_IVT_PRESS_SHUTTER 3
-#define INTERVAL_STATE_IVT_RELEASE_SHUTTER 4
-#define INTERVAL_STATE_IVT_RELEASE_SHUTTER_WAIT 5
-
-#define INTERVAL_STATE_XPT_IDLE 20
-#define INTERVAL_STATE_XPT_PRESS_SHUTTER1 21
-#define INTERVAL_STATE_XPT_RELEASE_SHUTTER1 22
-#define INTERVAL_STATE_XPT_RELEASE_SHUTTER1_WAIT 23
-#define INTERVAL_STATE_XPT_PRESS_SHUTTER2 24
-#define INTERVAL_STATE_XPT_RELEASE_SHUTTER2 25
-#define INTERVAL_STATE_XPT_RELEASE_SHUTTER2_WAIT 26
-
-static int pictureCounter = 0;
-
-static time_t intervalTime = 0;
-static time_t intervalTimeMillis = 0;
-static bool intervalTimeInMinutes = false;
-
-static time_t exposureTime = 0;
-static time_t exposureTimeMillis = 0;
-static bool exposureTimeInMinutes = false;
-
-static bool intervalRunning = false;
-static time_t lastIntervalTimestamp = 0;
-static time_t lastExposureTimestamp = 0;
-static time_t lastFullPressedTimestamp = 0;
-static time_t lastReleasedTimestamp = 0;
-
-static lv_obj_t *mbox1;
-static int lastTab = 0;
-
-static bool nextShot = false;
-static bool aboartInterval = false;
-static int intervalState = INTERVAL_STATE_IDLE;
+Intervalometer intervalometer;
 
 // ---------------------------------------------------------------------------
 
-void btScreenLoaded(lv_event_t *e)
-{
-  ALOG_D("btScreenLoaded");
-
-  if (!(std::static_pointer_cast<BTCameraControl>(cameraControl))->isPaired())
-  {
-    ccui.disableButton(ui_BTConnectButton);
-  }
-  else
-  {
-    lv_label_set_text(ui_BTCameraNameLabel, cameraControl->cameraName().c_str());
-    lv_label_set_text(ui_BTCameraAddressLabel, cameraControl->cameraAddress().c_str());
-  }
-
-  lv_label_set_text(ui_BTConnectLabel, cameraControl->isConnected()
-                                           ? "Camera is connected."
-                                           : "Camera NOT connected!");
-}
-
-static void msgbox_event_cb(lv_event_t *e)
-{
-  lv_obj_t *obj = lv_event_get_current_target(e);
-  ALOG_D("Button %s clicked", lv_msgbox_get_active_btn_text(obj));
-  lv_msgbox_close(obj);
-  lv_tabview_set_act(ui_BluetoothTabView, 0, LV_ANIM_OFF);
-}
-
-void btBluetoothTabViewValueChanged(lv_event_t *e)
-{
-  ALOG_D("btBluetoothTabViewValueChanged=%d", e->code);
-
-  int activeTab = lv_tabview_get_tab_act(e->current_target);
-
-  if (lastTab != activeTab)
-  {
-    ALOG_D("current_target tab %d active", activeTab);
-    lastTab = activeTab;
-
-    if (activeTab != 0 && !cameraControl->isConnected())
-    {
-      ccui.showHandlerMessageBoxRETURN(
-        CCUIMessageBoxType::ERROR, "Camera NOT connected.", msgbox_event_cb);
-    }
-  }
-}
-
-void btHalfPressedPressed(lv_event_t *e)
-{
-  cameraControl->shutterHalfPress();
-}
-
-void btHalfPressedReleased(lv_event_t *e)
-{
-  cameraControl->shutterRelease();
-}
-
-void btFullPressedPressed(lv_event_t *e)
-{
-  cameraControl->shutterFullPress();
-}
-
-void btFullPressedReleased(lv_event_t *e)
-{
-  cameraControl->shutterRelease();
-}
-
-void checkCameraConnect(lv_event_t *e)
-{
-  ALOG_D("checkCameraConnect");
-
-  std::shared_ptr<BTCameraControl> btCameraControl =
-    std::static_pointer_cast<BTCameraControl>(cameraControl);
-
-  if (btCameraControl->isConnected() || btCameraControl->connect())
-  {
-    ALOG_I("camera is connected");
-  }
-  else
-  {
-    ALOG_I("camera NOT connected");
-  }
-  ALOG_D("done.");
-  btScreenLoaded(nullptr);
-}
-
-void checkCameraParing(lv_event_t *e)
-{
-  ALOG_D("checkCameraParing");
- 
-  if ((std::static_pointer_cast<BTCameraControl>(cameraControl))->pairing())
-  {
-    ALOG_I("camera is paired");
-  }
-  else
-  {
-    ALOG_I("camera NOT paired");
-  }
-  ALOG_D("done.");
-  btScreenLoaded(nullptr);
-}
-
-void btPairingClicked(lv_event_t *e)
-{
-  ALOG_D("btPairingClicked");
-  static const char *buttons[] = {""};
-  ccui.showTaskMessageBox(
-    "Pairing", "Please wait...\nTimeout about 40s", false, checkCameraParing, buttons);
-}
-
-void btConnectButtonClicked(lv_event_t *e)
-{
-  ALOG_D("btConnectButtonClicked");
-
-  static const char *buttons[] = {""};
-
-  ccui.showTaskMessageBox(
-    "Connecting", "Please wait...", false, checkCameraConnect, buttons);
-}
-
-void shutterFullPressed()
+void Intervalometer::shutterFullPressed()
 {
   cameraControl->shutterFullPress();
   lastFullPressedTimestamp = millis();
 }
 
-void shutterReleased()
+void Intervalometer::shutterReleased()
 {
   cameraControl->shutterRelease();
   lastReleasedTimestamp = millis();
 }
 
-int getRollerDigitsValue(lv_obj_t *rollerDigits[], int digits)
+int Intervalometer::getRollerDigitsValue(lv_obj_t *rollerDigits[], int digits)
 {
   int value = 0;
   for (int i = 0; i < digits; i++)
@@ -188,7 +31,7 @@ int getRollerDigitsValue(lv_obj_t *rollerDigits[], int digits)
   return value;
 }
 
-void setRollerDigitsValue(lv_obj_t *rollerDigits[], int digits, int value)
+void Intervalometer::setRollerDigitsValue(lv_obj_t *rollerDigits[], int digits, int value)
 {
   for (int i = digits; i > 0; i--)
   {
@@ -197,9 +40,9 @@ void setRollerDigitsValue(lv_obj_t *rollerDigits[], int digits, int value)
   }
 }
 
-void btIntervalStartButtonClicked(lv_event_t *e)
+void Intervalometer::startButtonClicked(lv_event_t *e)
 {
-  ALOG_D("btIntervalStartButtonClicked");
+  ALOG_D("Intervalometer::startButtonClicked");
 
   lv_obj_t *pRollerDigits[] = {ui_PRoller1000, ui_PRoller100, ui_PRoller10,
                                ui_PRoller1};
@@ -231,8 +74,8 @@ void btIntervalStartButtonClicked(lv_event_t *e)
     setRollerDigitsValue(iRollerDigits, 3, 0);
   }
 
-  intervalState = (exposureTime > 0) ? INTERVAL_STATE_XPT_PRESS_SHUTTER1
-                                     : INTERVAL_STATE_IVT_PRESS_SHUTTER;
+  intervalState = (exposureTime > 0) ? IntervalState::XPT_PRESS_SHUTTER1
+                                     : IntervalState::IVT_PRESS_SHUTTER;
 
   ALOG_D("intervalState=%d", intervalState);
   ALOG_D("pictureCounter=%d", pictureCounter);
@@ -254,23 +97,23 @@ void btIntervalStartButtonClicked(lv_event_t *e)
   }
 }
 
-void btIntervalPauseButtonClicked(lv_event_t *e)
+void Intervalometer::pauseButtonClicked(lv_event_t *e)
 {
-  ALOG_D("btIntervalPauseButtonClicked");
+  ALOG_D("Intervalometer::pauseButtonClicked");
   ccui.disableButton(ui_BTIntPauseButton);
   ccui.enableButton(ui_BTIntStartButton);
   intervalRunning = false;
   aboartInterval = true;
 }
 
-void btIntervalStopButtonClicked(lv_event_t *e)
+void Intervalometer::stopButtonClicked(lv_event_t *e)
 {
   lv_obj_t *pRollerDigits[] = {ui_PRoller1000, ui_PRoller100, ui_PRoller10,
                                ui_PRoller1};
   lv_obj_t *iRollerDigits[] = {ui_IRoller100, ui_IRoller10, ui_IRoller1};
   lv_obj_t *xRollerDigits[] = {ui_XRoller100, ui_XRoller10, ui_XRoller1};
 
-  ALOG_D("btIntervalStopButtonClicked");
+  ALOG_D("Intervalometer::stopButtonClicked");
 
   ccui.disableButton(ui_BTIntPauseButton);
   ccui.enableButton(ui_BTIntStartButton);
@@ -294,7 +137,8 @@ void btIntervalStopButtonClicked(lv_event_t *e)
   lv_roller_set_selected(ui_XURoller, 0, LV_ANIM_ON);
 }
 
-void btIntervalHandler()
+
+void Intervalometer::handler()
 {
   time_t leftSec;
 
@@ -341,7 +185,7 @@ void btIntervalHandler()
     setRollerDigitsValue(pRollerDigits, 4, pictureCounter);
     if (pictureCounter == 0)
     {
-      btIntervalStopButtonClicked(nullptr);
+      stopButtonClicked(nullptr);
     }
   }
 
@@ -350,132 +194,149 @@ void btIntervalHandler()
 
     // IVT ---------------------------------------------------------------------
 
-  case INTERVAL_STATE_IVT_IDLE:
+  case IntervalState::IVT_IDLE:
     if (leftSec <= 0)
     {
       lastIntervalTimestamp = millis();
-      intervalState = INTERVAL_STATE_IVT_PRESS_SHUTTER;
+      intervalState = IntervalState::IVT_PRESS_SHUTTER;
     }
     if (aboartInterval)
     {
-      intervalState = INTERVAL_STATE_IDLE;
+      intervalState = IntervalState::IDLE;
     }
     break;
 
-  case INTERVAL_STATE_IVT_PRESS_SHUTTER:
+  case IntervalState::IVT_PRESS_SHUTTER:
     ALOG_D("pictures left %d", pictureCounter);
     shutterFullPressed();
-    intervalState = INTERVAL_STATE_IVT_RELEASE_SHUTTER;
+    intervalState = IntervalState::IVT_RELEASE_SHUTTER;
     break;
 
-  case INTERVAL_STATE_IVT_RELEASE_SHUTTER:
+  case IntervalState::IVT_RELEASE_SHUTTER:
     if ((millis() - lastFullPressedTimestamp) >= SHUTTER_PAUSE_TIME)
     {
       shutterReleased();
-      intervalState = INTERVAL_STATE_IVT_RELEASE_SHUTTER_WAIT;
+      intervalState = IntervalState::IVT_RELEASE_SHUTTER_WAIT;
     }
     if (aboartInterval)
     {
-      intervalState = INTERVAL_STATE_IDLE;
+      intervalState = IntervalState::IDLE;
     }
     break;
 
-  case INTERVAL_STATE_IVT_RELEASE_SHUTTER_WAIT:
+  case IntervalState::IVT_RELEASE_SHUTTER_WAIT:
     if ((millis() - lastReleasedTimestamp) >= SHUTTER_PAUSE_TIME)
     {
-      intervalState = INTERVAL_STATE_IVT_IDLE;
+      intervalState = IntervalState::IVT_IDLE;
       if (pictureCounter > 0)
       {
         nextShot = true;
       }
       else
       {
-        intervalState = INTERVAL_STATE_IDLE;
+        intervalState = IntervalState::IDLE;
       }
     }
     if (aboartInterval)
     {
-      intervalState = INTERVAL_STATE_IDLE;
+      intervalState = IntervalState::IDLE;
     }
     break;
 
     // XPT ---------------------------------------------------------------------
 
-  case INTERVAL_STATE_XPT_IDLE:
+  case IntervalState::XPT_IDLE:
     if (leftSec <= 0)
     {
       lastIntervalTimestamp = lastExposureTimestamp = millis();
-      intervalState = INTERVAL_STATE_XPT_PRESS_SHUTTER1;
+      intervalState = IntervalState::XPT_PRESS_SHUTTER1;
       if (pictureCounter > 0)
       {
         nextShot = true;
       }
       else
       {
-        intervalState = INTERVAL_STATE_IDLE;
+        intervalState = IntervalState::IDLE;
       }
     }
     if (aboartInterval)
     {
-      intervalState = INTERVAL_STATE_IDLE;
+      intervalState = IntervalState::IDLE;
     }
     break;
 
-  case INTERVAL_STATE_XPT_PRESS_SHUTTER1:
+  case IntervalState::XPT_PRESS_SHUTTER1:
     if (pictureCounter > 0)
     {
       ALOG_D("shutter1 - pictures left %d", pictureCounter);
       shutterFullPressed();
-      intervalState = INTERVAL_STATE_XPT_RELEASE_SHUTTER1;
+      intervalState = IntervalState::XPT_RELEASE_SHUTTER1;
     }
     else
     {
-      intervalState = INTERVAL_STATE_IDLE;
+      intervalState = IntervalState::IDLE;
     }
     break;
 
-  case INTERVAL_STATE_XPT_RELEASE_SHUTTER1:
+  case IntervalState::XPT_RELEASE_SHUTTER1:
     if ((millis() - lastFullPressedTimestamp) >= SHUTTER_PAUSE_TIME)
     {
       shutterReleased();
-      intervalState = INTERVAL_STATE_XPT_RELEASE_SHUTTER1_WAIT;
+      intervalState = IntervalState::XPT_RELEASE_SHUTTER1_WAIT;
     }
     break;
 
-  case INTERVAL_STATE_XPT_RELEASE_SHUTTER1_WAIT:
+  case IntervalState::XPT_RELEASE_SHUTTER1_WAIT:
     if ((leftSec > 0 && aboartInterval) ||
         (millis() - lastExposureTimestamp) >= exposureTimeMillis)
     {
-      intervalState = INTERVAL_STATE_XPT_PRESS_SHUTTER2;
+      intervalState = IntervalState::XPT_PRESS_SHUTTER2;
     }
     break;
 
-  case INTERVAL_STATE_XPT_PRESS_SHUTTER2:
+  case IntervalState::XPT_PRESS_SHUTTER2:
     ALOG_D("shutter2");
     shutterFullPressed();
-    intervalState = INTERVAL_STATE_XPT_RELEASE_SHUTTER2;
+    intervalState = IntervalState::XPT_RELEASE_SHUTTER2;
     break;
 
-  case INTERVAL_STATE_XPT_RELEASE_SHUTTER2:
+  case IntervalState::XPT_RELEASE_SHUTTER2:
     if ((millis() - lastFullPressedTimestamp) >= SHUTTER_PAUSE_TIME)
     {
       shutterReleased();
-      intervalState = INTERVAL_STATE_XPT_RELEASE_SHUTTER2_WAIT;
+      intervalState = IntervalState::XPT_RELEASE_SHUTTER2_WAIT;
     }
     break;
 
-  case INTERVAL_STATE_XPT_RELEASE_SHUTTER2_WAIT:
+  case IntervalState::XPT_RELEASE_SHUTTER2_WAIT:
     if ((millis() - lastReleasedTimestamp) >= 3000)
     {
-      intervalState = INTERVAL_STATE_XPT_IDLE;
+      intervalState = IntervalState::XPT_IDLE;
     }
     if (aboartInterval)
     {
-      intervalState = INTERVAL_STATE_IDLE;
+      intervalState = IntervalState::IDLE;
     }
     break;
 
   default:
     break;
   }
+}
+
+// UI event wrapper ---------------------------------------------------------
+
+void intervalStartButtonClicked(lv_event_t *e)
+{
+  intervalometer.startButtonClicked(e);
+}
+
+void intervalPauseButtonClicked(lv_event_t *e)
+{
+  intervalometer.pauseButtonClicked(e);
+}
+
+void intervalStopButtonClicked(lv_event_t *e)
+{
+  intervalometer.stopButtonClicked(e);
 }
