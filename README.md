@@ -11,3 +11,18 @@ You need the *CCAPI Activation Tool* from the [Canon Developers Program](https:/
 
 The last thing I want to do is to implement the Picture Transfer Protocol via IP. (PTP/IP)
 (for all legacy WiFi cameras e.g. 5Dm4)
+
+# Hardware
+
+- [2432S028R - amazon.de](https://www.amazon.de/s?k=2432S028R&__mk_de_DE=%C3%85M%C3%85%C5%BD%C3%95%C3%91&crid=3B8TU5MJVTVY4&sprefix=2432s028r%2Caps%2C125&ref=nb_sb_noss_2)
+
+- [2432S028R - aliexpress.com](https://de.aliexpress.com/w/wholesale-2432S028R.html?spm=a2g0o.home.search.0)
+
+# Screeshots
+
+![start](docs/start.png)
+
+![remote](docs/remote.png)
+
+![interval](docs/interval.png)
+
