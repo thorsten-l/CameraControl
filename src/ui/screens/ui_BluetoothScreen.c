@@ -78,10 +78,23 @@ lv_label_set_text(ui_BTConnectLabel,"Camera not connected!");
 
 ui_BTRemoteTabPage = lv_tabview_add_tab(ui_BluetoothTabView, "Remote");
 lv_obj_set_flex_flow(ui_BTRemoteTabPage,LV_FLEX_FLOW_COLUMN);
-lv_obj_set_flex_align(ui_BTRemoteTabPage, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
+lv_obj_set_flex_align(ui_BTRemoteTabPage, LV_FLEX_ALIGN_SPACE_BETWEEN, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 lv_obj_clear_flag( ui_BTRemoteTabPage, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_pad_left(ui_BTRemoteTabPage, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_right(ui_BTRemoteTabPage, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_top(ui_BTRemoteTabPage, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_bottom(ui_BTRemoteTabPage, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_BTHalfPressButton = lv_btn_create(ui_BTRemoteTabPage);
+ui_Container1 = lv_obj_create(ui_BTRemoteTabPage);
+lv_obj_remove_style_all(ui_Container1);
+lv_obj_set_width( ui_Container1, lv_pct(100));
+lv_obj_set_height( ui_Container1, lv_pct(100));
+lv_obj_set_align( ui_Container1, LV_ALIGN_CENTER );
+lv_obj_set_flex_flow(ui_Container1,LV_FLEX_FLOW_COLUMN);
+lv_obj_set_flex_align(ui_Container1, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START);
+lv_obj_clear_flag( ui_Container1, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+
+ui_BTHalfPressButton = lv_btn_create(ui_Container1);
 lv_obj_set_width( ui_BTHalfPressButton, 100);
 lv_obj_set_height( ui_BTHalfPressButton, 50);
 lv_obj_set_align( ui_BTHalfPressButton, LV_ALIGN_CENTER );
@@ -94,7 +107,7 @@ lv_obj_set_height( ui_Label12, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_align( ui_Label12, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label12,"Autofocus");
 
-ui_BTFullPressButton = lv_btn_create(ui_BTRemoteTabPage);
+ui_BTFullPressButton = lv_btn_create(ui_Container1);
 lv_obj_set_width( ui_BTFullPressButton, 100);
 lv_obj_set_height( ui_BTFullPressButton, 50);
 lv_obj_set_align( ui_BTFullPressButton, LV_ALIGN_CENTER );
@@ -107,18 +120,42 @@ lv_obj_set_height( ui_Label13, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_align( ui_Label13, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label13,"Shutter");
 
-ui_Container11 = lv_obj_create(ui_BTRemoteTabPage);
+ui_Container2 = lv_obj_create(ui_Container1);
+lv_obj_remove_style_all(ui_Container2);
+lv_obj_set_width( ui_Container2, lv_pct(100));
+lv_obj_set_height( ui_Container2, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_align( ui_Container2, LV_ALIGN_CENTER );
+lv_obj_set_flex_flow(ui_Container2,LV_FLEX_FLOW_ROW);
+lv_obj_set_flex_align(ui_Container2, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_START);
+lv_obj_clear_flag( ui_Container2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+
+ui_Label6 = lv_label_create(ui_Container2);
+lv_obj_set_width( ui_Label6, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_Label6, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_align( ui_Label6, LV_ALIGN_CENTER );
+lv_label_set_text(ui_Label6,"Movie Mode");
+
+ui_BTMovieModeSwitch = lv_switch_create(ui_Container2);
+lv_obj_set_width( ui_BTMovieModeSwitch, 50);
+lv_obj_set_height( ui_BTMovieModeSwitch, 25);
+lv_obj_set_align( ui_BTMovieModeSwitch, LV_ALIGN_CENTER );
+
+
+ui_Container11 = lv_obj_create(ui_Container1);
 lv_obj_remove_style_all(ui_Container11);
-lv_obj_set_height( ui_Container11, 63);
-lv_obj_set_width( ui_Container11, LV_SIZE_CONTENT);  /// 226
+lv_obj_set_width( ui_Container11, lv_pct(100));
+lv_obj_set_height( ui_Container11, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Container11, 0 );
 lv_obj_set_y( ui_Container11, -17 );
+lv_obj_set_align( ui_Container11, LV_ALIGN_CENTER );
+lv_obj_set_flex_flow(ui_Container11,LV_FLEX_FLOW_ROW);
+lv_obj_set_flex_align(ui_Container11, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 lv_obj_clear_flag( ui_Container11, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 ui_BTWideButton = lv_btn_create(ui_Container11);
-lv_obj_set_width( ui_BTWideButton, 50);
+lv_obj_set_width( ui_BTWideButton, 70);
 lv_obj_set_height( ui_BTWideButton, 50);
-lv_obj_set_align( ui_BTWideButton, LV_ALIGN_BOTTOM_LEFT );
+lv_obj_set_align( ui_BTWideButton, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_BTWideButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_BTWideButton, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
@@ -129,11 +166,9 @@ lv_obj_set_align( ui_Label19, LV_ALIGN_CENTER );
 lv_label_set_text(ui_Label19,"Wide");
 
 ui_BTTeleButton = lv_btn_create(ui_Container11);
-lv_obj_set_width( ui_BTTeleButton, 50);
+lv_obj_set_width( ui_BTTeleButton, 70);
 lv_obj_set_height( ui_BTTeleButton, 50);
-lv_obj_set_x( ui_BTTeleButton, 60 );
-lv_obj_set_y( ui_BTTeleButton, 0 );
-lv_obj_set_align( ui_BTTeleButton, LV_ALIGN_BOTTOM_LEFT );
+lv_obj_set_align( ui_BTTeleButton, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_BTTeleButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_BTTeleButton, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_pad_row(ui_BTTeleButton, 10, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -390,8 +425,7 @@ lv_obj_clear_flag( ui_Image13, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 ui_CalHomeButton2 = lv_btn_create(ui_BluetoothScreen);
 lv_obj_set_width( ui_CalHomeButton2, 32);
 lv_obj_set_height( ui_CalHomeButton2, 32);
-lv_obj_set_x( ui_CalHomeButton2, 208 );
-lv_obj_set_y( ui_CalHomeButton2, 0 );
+lv_obj_set_align( ui_CalHomeButton2, LV_ALIGN_TOP_RIGHT );
 lv_obj_add_flag( ui_CalHomeButton2, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_CalHomeButton2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_CalHomeButton2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
@@ -413,6 +447,8 @@ lv_obj_add_event_cb(ui_BTPairingButton, ui_event_BTPairingButton, LV_EVENT_ALL, 
 lv_obj_add_event_cb(ui_BTConnectButton, ui_event_BTConnectButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BTHalfPressButton, ui_event_BTHalfPressButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BTFullPressButton, ui_event_BTFullPressButton, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_BTWideButton, ui_event_BTWideButton, LV_EVENT_ALL, NULL);
+lv_obj_add_event_cb(ui_BTTeleButton, ui_event_BTTeleButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BTIntStartButton, ui_event_BTIntStartButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BTIntPauseButton, ui_event_BTIntPauseButton, LV_EVENT_ALL, NULL);
 lv_obj_add_event_cb(ui_BTIntStopButton, ui_event_BTIntStopButton, LV_EVENT_ALL, NULL);

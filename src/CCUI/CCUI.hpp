@@ -22,25 +22,24 @@ public:
   void enableButton(lv_obj_t *button);
   void disableButton(lv_obj_t *button);
 
-  void showHandlerMessageBox(CCUIMessageBoxType type, const char *message,
-                                   bool closeButton,
-                                   lv_event_cb_t eventCallback,
-                                   const char *buttons[]);
+  void showHandlerMessageBox(
+    CCUIMessageBoxType type, const char *message, bool closeButton,
+    lv_event_cb_t eventCallback, const char *buttons[]);
 
 /* create a task based message box for blocking io  */
   void showTaskMessageBox(
     const char* title, const char *message, bool closeButton,
     lv_event_cb_t eventCallback, const char *buttons[]);
 
-  void showHandlerMessageBox(CCUIMessageBoxType type, const char *message,
-                             bool closeButton);
+  void showHandlerMessageBox(
+    CCUIMessageBoxType type, const char *message, bool closeButton);
 
-  void showHandlerMessageBoxNOYES(CCUIMessageBoxType type, const char *message,
-                                  bool closeButton,
-                                  lv_event_cb_t eventCallback);
+  void showHandlerMessageBoxNOYES(
+    CCUIMessageBoxType type, const char *message, 
+    bool closeButton, lv_event_cb_t eventCallback);
 
-  void showHandlerMessageBoxRETURN(CCUIMessageBoxType type, const char *message,
-                                   lv_event_cb_t eventCallback);
+  void showHandlerMessageBoxRETURN(
+    CCUIMessageBoxType type, const char *message, lv_event_cb_t eventCallback);
 
   void handler();
 };

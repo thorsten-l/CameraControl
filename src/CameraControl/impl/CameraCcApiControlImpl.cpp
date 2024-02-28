@@ -16,37 +16,11 @@ String CameraCcApiControl::cameraAddress()
   return "-";
 }
 
-/*
-int CameraCcApiControl::pairing()
-{
-  // Implementierung für CameraCcApiControl
-  std::cout << "CameraCcApiControl::pairing()" << std::endl;
-  return 0;
-}
-
-int CameraCcApiControl::connect()
-{
-  // Implementierung für CameraCcApiControl
-  std::cout << "CameraCcApiControl::connect()" << std::endl;
-  return 0;
-}
-*/
-
-int CameraCcApiControl::connect(String ssid, String password)
+bool CameraCcApiControl::connect(String ssid, String password)
 {
   ALOG_E("Not implemented");
-  return 0;
-}
-
-/*
-bool CameraCcApiControl::isPaired()
-{
-  // Implementierung für CameraCcApiControl
-  std::cout << "CameraCcApiControl::isPaired()" << std::endl;
-
   return false;
 }
-*/
 
 bool CameraCcApiControl::isConnected()
 {
@@ -57,32 +31,43 @@ bool CameraCcApiControl::isConnected()
 }
 
 
-int CameraCcApiControl::disconnect()
+void CameraCcApiControl::disconnect()
 {
   // Implementierung für CameraCcApiControl
   std::cout << "CameraCcApiControl::disconnect()" << std::endl;
-  return 0;
 }
 
-int CameraCcApiControl::shutterRelease()
+bool CameraCcApiControl::shutterReleased()
 {
   // Implementierung für CameraCcApiControl
   std::cout << "CameraCcApiControl::shutterRelease()" << std::endl;
-  return 0;
+  return false;
 }
 
-int CameraCcApiControl::shutterHalfPress()
+bool CameraCcApiControl::shutterHalfPressed()
 {
   // Implementierung für CameraCcApiControl
   std::cout << "CameraCcApiControl::shutterHalfPress()" << std::endl;
-  return 0;
+  return false;
 }
 
-int CameraCcApiControl::shutterFullPress()
+bool CameraCcApiControl::shutterFullPressed(bool movieMode)
 {
   // Implementierung für CameraCcApiControl
   std::cout << "CameraCcApiControl::shutterFullPress()" << std::endl;
-  return 0;
+  return false;
+}
+
+bool CameraCcApiControl::widePressed()
+{
+  std::cout << "CameraCcApiControl::widePressed()" << std::endl;
+  return false;
+}
+
+bool CameraCcApiControl::telePressed()
+{
+  std::cout << "CameraCcApiControl::telePressed()" << std::endl;
+  return false;
 }
 
 void CameraCcApiControl::handler() {}

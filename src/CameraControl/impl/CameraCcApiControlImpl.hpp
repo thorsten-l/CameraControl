@@ -10,11 +10,13 @@ public:
   String apiName() override;
   String cameraName() override;
   String cameraAddress() override;
-  int connect(String ssid, String password);
+  bool connect(String ssid, String password);
   bool isConnected();
-  int disconnect() override;
-  int shutterRelease() override;
-  int shutterHalfPress() override;
-  int shutterFullPress() override;
+  void disconnect() override;
+  bool shutterReleased() override;
+  bool shutterHalfPressed() override;
+  bool shutterFullPressed(bool movieMode) override;
+  bool widePressed() override;
+  bool telePressed() override;
   void handler();
 };

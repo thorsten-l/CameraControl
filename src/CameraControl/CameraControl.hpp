@@ -21,10 +21,12 @@ public:
   virtual String cameraName() = 0;
   virtual String cameraAddress() = 0;
   virtual bool isConnected() = 0;
-  virtual int disconnect() = 0;
-  virtual int shutterRelease() = 0;
-  virtual int shutterHalfPress() = 0;
-  virtual int shutterFullPress() = 0;
+  virtual void disconnect() = 0;
+  virtual bool shutterReleased() = 0;
+  virtual bool shutterHalfPressed() = 0;
+  virtual bool shutterFullPressed(bool movieMode) = 0;
+  virtual bool widePressed() = 0;
+  virtual bool telePressed() = 0;
   virtual void handler() = 0;
 
   static std::shared_ptr<CameraControl> getInstance(CameraControlType type);
@@ -35,13 +37,13 @@ class BTCameraControl : public CameraControl
 public:
   virtual int pairing() = 0;
   virtual bool isPaired() = 0;
-  virtual int connect() = 0;
+  virtual bool connect() = 0;
 };
 
 class WifiCameraControl : public CameraControl
 {
 public:
-  virtual int connect(String ssid, String password) = 0;
+  virtual bool connect(String ssid, String password) = 0;
 };
 
 extern std::shared_ptr<CameraControl> cameraControl;

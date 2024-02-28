@@ -66,15 +66,21 @@ lv_obj_t *ui_BTCameraNameLabel;
 lv_obj_t *ui_BTCameraAddressLabel;
 lv_obj_t *ui_BTConnectLabel;
 lv_obj_t *ui_BTRemoteTabPage;
+lv_obj_t *ui_Container1;
 void ui_event_BTHalfPressButton( lv_event_t * e);
 lv_obj_t *ui_BTHalfPressButton;
 lv_obj_t *ui_Label12;
 void ui_event_BTFullPressButton( lv_event_t * e);
 lv_obj_t *ui_BTFullPressButton;
 lv_obj_t *ui_Label13;
+lv_obj_t *ui_Container2;
+lv_obj_t *ui_Label6;
+lv_obj_t *ui_BTMovieModeSwitch;
 lv_obj_t *ui_Container11;
+void ui_event_BTWideButton( lv_event_t * e);
 lv_obj_t *ui_BTWideButton;
 lv_obj_t *ui_Label19;
+void ui_event_BTTeleButton( lv_event_t * e);
 lv_obj_t *ui_BTTeleButton;
 lv_obj_t *ui_Label20;
 lv_obj_t *ui_BTIntervalTabPane;
@@ -231,6 +237,24 @@ if ( event_code == LV_EVENT_PRESSED) {
 }
 if ( event_code == LV_EVENT_RELEASED) {
       btFullPressedReleased( e );
+}
+}
+void ui_event_BTWideButton( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_PRESSED) {
+      btWidePressed( e );
+}
+if ( event_code == LV_EVENT_RELEASED) {
+      btWideReleased( e );
+}
+}
+void ui_event_BTTeleButton( lv_event_t * e) {
+    lv_event_code_t event_code = lv_event_get_code(e);lv_obj_t * target = lv_event_get_target(e);
+if ( event_code == LV_EVENT_PRESSED) {
+      btTelePressed( e );
+}
+if ( event_code == LV_EVENT_RELEASED) {
+      btTeleReleased( e );
 }
 }
 void ui_event_BTIntStartButton( lv_event_t * e) {

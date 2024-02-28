@@ -16,38 +16,11 @@ String CameraPtpControl::cameraAddress()
   return "-";
 }
 
-/*
-int CameraPtpControl::pairing()
-{
-  // Implementierung für CameraPtpControl
-  std::cout << "CameraPtpControl::pairing()" << std::endl;
-  return 0;
-}
-
-
-int CameraPtpControl::connect()
-{
-  // Implementierung für CameraPtpControl
-  std::cout << "CameraPtpControl::connect()" << std::endl;
-  return 0;
-}
-*/
-
-int CameraPtpControl::connect(String ssid, String password)
+bool CameraPtpControl::connect(String ssid, String password)
 {
   ALOG_E("Not implemented");
-  return 0;
-}
-
-/*
-bool CameraPtpControl::isPaired()
-{
-  // Implementierung für CameraPtpControl
-  std::cout << "CameraPtpControl::isPaired()" << std::endl;
-
   return false;
 }
-*/
 
 bool CameraPtpControl::isConnected()
 {
@@ -57,32 +30,43 @@ bool CameraPtpControl::isConnected()
   return false;
 }
 
-int CameraPtpControl::disconnect()
+void CameraPtpControl::disconnect()
 {
   // Implementierung für CameraPtpControl
   std::cout << "CameraPtpControl::disconnect()" << std::endl;
-  return 0;
 }
 
-int CameraPtpControl::shutterRelease()
+bool CameraPtpControl::shutterReleased()
 {
   // Implementierung für CameraPtpControl
   std::cout << "CameraPtpControl::shutterRelease()" << std::endl;
-  return 0;
+  return false;
 }
 
-int CameraPtpControl::shutterHalfPress()
+bool CameraPtpControl::shutterHalfPressed()
 {
   // Implementierung für CameraPtpControl
   std::cout << "CameraPtpControl::shutterHalfPress()" << std::endl;
-  return 0;
+  return false;
 }
 
-int CameraPtpControl::shutterFullPress()
+bool CameraPtpControl::shutterFullPressed(bool movieMode)
 {
   // Implementierung für CameraPtpControl
   std::cout << "CameraPtpControl::shutterFullPress()" << std::endl;
-  return 0;
+  return false;
+}
+
+bool CameraPtpControl::widePressed()
+{
+  std::cout << "CameraCcApiControl::widePressed()" << std::endl;
+  return false;
+}
+
+bool CameraPtpControl::telePressed()
+{
+  std::cout << "CameraCcApiControl::telePressed()" << std::endl;
+  return false;
 }
 
 void CameraPtpControl::handler() {}

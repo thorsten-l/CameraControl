@@ -285,36 +285,58 @@ bool CanonBLERemote::isConnected()
   return pconnection_state->isConnected();
 }
 
-BLERemoteCharacteristic *CanonBLERemote::shutterHalfPressed()
+bool CanonBLERemote::shutterHalfPressed()
 {
-  BLERemoteCharacteristic *characteristic = nullptr;
   if (isConnected() || connect())
   {
     pRemoteCharacteristic_Trigger->writeValue(
         (uint8_t)(MODE_IMMEDIATE | BUTTON_SHUTTER_HALF_PRESSED), false);
+    return true;
   }
-  return characteristic;
+  return false;
 }
 
-BLERemoteCharacteristic *CanonBLERemote::shutterFullPressed()
+bool CanonBLERemote::shutterFullPressed(bool movieMode)
 {
-  BLERemoteCharacteristic *characteristic = nullptr;
   if (isConnected() || connect())
   {
-    pRemoteCharacteristic_Trigger->writeValue(
-        (uint8_t)(MODE_IMMEDIATE | BUTTON_SHUTTER_FULL_PRESSED));
+    uint8_t value =
+        movieMode ? (uint8_t)(MODE_MOVIE | BUTTON_SHUTTER_FULL_PRESSED)
+                  : (uint8_t)(MODE_IMMEDIATE | BUTTON_SHUTTER_FULL_PRESSED);
+    pRemoteCharacteristic_Trigger->writeValue(value);
+    return true;
   }
-  return characteristic;
+  return false;
 }
 
-BLERemoteCharacteristic *CanonBLERemote::shutterReleased()
+bool CanonBLERemote::shutterReleased()
 {
-  BLERemoteCharacteristic *characteristic = nullptr;
   if (isConnected() || connect())
   {
     pRemoteCharacteristic_Trigger->writeValue(MODE_IMMEDIATE);
+    return true;
   }
-  return characteristic;
+  return false;
+}
+
+bool CanonBLERemote::widePressed()
+{
+  if (isConnected() || connect())
+  {
+    pRemoteCharacteristic_Trigger->writeValue((uint8_t)(BUTTON_WIDE), false);
+    return true;
+  }
+  return false;
+}
+
+bool CanonBLERemote::telePressed()
+{
+  if (isConnected() || connect())
+  {
+    pRemoteCharacteristic_Trigger->writeValue((uint8_t)(BUTTON_TELE), false);
+    return true;
+  }
+  return false;
 }
 
 /** Trigger Camera

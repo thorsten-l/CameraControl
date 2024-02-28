@@ -68,9 +68,11 @@ public:
     bool trigger();
     bool focus();
 
-    BLERemoteCharacteristic *shutterHalfPressed();
-    BLERemoteCharacteristic *shutterFullPressed();
-    BLERemoteCharacteristic *shutterReleased();
+    bool shutterHalfPressed();
+    bool shutterFullPressed(bool movieMode);
+    bool shutterReleased();
+    bool widePressed();
+    bool telePressed();
 
     BLEAddress getPairedAddress();
     String getPairedAddressString();

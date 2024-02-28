@@ -48,47 +48,44 @@ bool CameraBtControl::isConnected()
   return connected;
 }
 
-int CameraBtControl::connect()
+bool CameraBtControl::connect()
 {
   ALOG_D("Connecting...");
   return canon_ble.connect();
-  ;
 }
 
-int CameraBtControl::disconnect()
+void CameraBtControl::disconnect()
 {
   ALOG_D("Disconnecting...");
   canon_ble.disconnect();
-  return 1;
 }
 
-/*
-int CameraBtControl::connect(String ssid, String password)
-{
-  ALOG_E("Not implemented");
-  return 0;
-}
-*/
-
-int CameraBtControl::shutterRelease()
+bool CameraBtControl::shutterReleased()
 {
   ALOG_D("^--^");
-  canon_ble.shutterReleased();
-  return 1;
+  return canon_ble.shutterReleased();
 }
 
-int CameraBtControl::shutterHalfPress()
+bool CameraBtControl::shutterHalfPressed()
 {
   ALOG_D("V--V");
-  canon_ble.shutterHalfPressed();
-  return 1;
+  return canon_ble.shutterHalfPressed();
 }
 
-int CameraBtControl::shutterFullPress()
+bool CameraBtControl::shutterFullPressed(bool movieMode)
 {
   ALOG_D("V__V");
-  canon_ble.shutterFullPressed();
-  return 1;
+  return canon_ble.shutterFullPressed(movieMode);
+}
+
+bool CameraBtControl::widePressed()
+{
+  return canon_ble.widePressed();
+}
+
+bool CameraBtControl::telePressed()
+{
+  return canon_ble.telePressed();
 }
 
 void CameraBtControl::handler() {}

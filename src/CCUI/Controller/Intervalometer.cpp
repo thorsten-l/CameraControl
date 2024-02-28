@@ -10,13 +10,13 @@ Intervalometer intervalometer;
 
 void Intervalometer::shutterFullPressed()
 {
-  cameraControl->shutterFullPress();
+  cameraControl->shutterFullPressed(false);
   lastFullPressedTimestamp = millis();
 }
 
 void Intervalometer::shutterReleased()
 {
-  cameraControl->shutterRelease();
+  cameraControl->shutterReleased();
   lastReleasedTimestamp = millis();
 }
 

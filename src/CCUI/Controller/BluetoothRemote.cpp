@@ -9,20 +9,44 @@
 
 void btHalfPressedPressed(lv_event_t *e)
 {
-  cameraControl->shutterHalfPress();
+  cameraControl->shutterHalfPressed();
 }
 
 void btHalfPressedReleased(lv_event_t *e)
 {
-  cameraControl->shutterRelease();
+  cameraControl->shutterReleased();
 }
 
 void btFullPressedPressed(lv_event_t *e)
 {
-  cameraControl->shutterFullPress();
+  bool movieMode = lv_obj_has_state(ui_BTMovieModeSwitch, LV_STATE_CHECKED);
+  ALOG_D( "btFullPressedPressed movieMode=%s", movieMode ? "true" : "false");
+  cameraControl->shutterFullPressed(movieMode);
 }
 
 void btFullPressedReleased(lv_event_t *e)
 {
-  cameraControl->shutterRelease();
+  cameraControl->shutterReleased();
+}
+
+void btWidePressed(lv_event_t *e)
+{
+  ALOG_D("<->");
+  cameraControl->widePressed();
+}
+
+void btWideReleased(lv_event_t *e)
+{
+  ALOG_D("<->");
+}
+
+void btTelePressed(lv_event_t *e)
+{
+  ALOG_D(">-<");
+  cameraControl->telePressed();
+}
+
+void btTeleReleased(lv_event_t *e)
+{
+  ALOG_D(">-<");
 }

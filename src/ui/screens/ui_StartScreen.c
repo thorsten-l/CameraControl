@@ -12,12 +12,18 @@ lv_obj_clear_flag( ui_StartScreen, LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_E
 lv_obj_set_scrollbar_mode(ui_StartScreen, LV_SCROLLBAR_MODE_OFF);
 
 ui_StartTabView = lv_tabview_create(ui_StartScreen, LV_DIR_BOTTOM, 50);
-lv_obj_set_width( ui_StartTabView, 240);
-lv_obj_set_height( ui_StartTabView, 320);
+lv_obj_set_width( ui_StartTabView, lv_pct(100));
+lv_obj_set_height( ui_StartTabView, lv_pct(100));
 lv_obj_clear_flag( ui_StartTabView, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM | LV_OBJ_FLAG_SCROLL_CHAIN );    /// Flags
 
+lv_obj_set_style_pad_left(lv_tabview_get_tab_btns(ui_StartTabView), 0,  LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_right(lv_tabview_get_tab_btns(ui_StartTabView), 0,  LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_top(lv_tabview_get_tab_btns(ui_StartTabView), 0,  LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_pad_bottom(lv_tabview_get_tab_btns(ui_StartTabView), 0,  LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_WirelessTabPage = lv_tabview_add_tab(ui_StartTabView, "Wireless");
+lv_obj_set_flex_flow(ui_WirelessTabPage,LV_FLEX_FLOW_COLUMN);
+lv_obj_set_flex_align(ui_WirelessTabPage, LV_FLEX_ALIGN_SPACE_EVENLY, LV_FLEX_ALIGN_CENTER, LV_FLEX_ALIGN_CENTER);
 lv_obj_clear_flag( ui_WirelessTabPage, LV_OBJ_FLAG_CLICKABLE | LV_OBJ_FLAG_PRESS_LOCK | LV_OBJ_FLAG_CLICK_FOCUSABLE | LV_OBJ_FLAG_GESTURE_BUBBLE | LV_OBJ_FLAG_SNAPPABLE | LV_OBJ_FLAG_SCROLLABLE | LV_OBJ_FLAG_SCROLL_ELASTIC | LV_OBJ_FLAG_SCROLL_MOMENTUM | LV_OBJ_FLAG_SCROLL_CHAIN );    /// Flags
 lv_obj_set_scrollbar_mode(ui_WirelessTabPage, LV_SCROLLBAR_MODE_OFF);
 lv_obj_set_style_pad_left(ui_WirelessTabPage, 0, LV_PART_MAIN| LV_STATE_DEFAULT);
@@ -169,6 +175,8 @@ ui_AppNameLabel = lv_label_create(ui_AboutTabPage);
 lv_obj_set_width( ui_AppNameLabel, LV_SIZE_CONTENT);  /// 1
 lv_obj_set_height( ui_AppNameLabel, LV_SIZE_CONTENT);   /// 1
 lv_label_set_text(ui_AppNameLabel,"CameraControl");
+lv_obj_set_style_text_color(ui_AppNameLabel, lv_color_hex(0x69BCFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_opa(ui_AppNameLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_AppNameLabel, &lv_font_montserrat_18, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_AppVersionLabel = lv_label_create(ui_AboutTabPage);
@@ -177,6 +185,8 @@ lv_obj_set_height( ui_AppVersionLabel, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_AppVersionLabel, 150 );
 lv_obj_set_y( ui_AppVersionLabel, 0 );
 lv_label_set_text(ui_AppVersionLabel,"0.0.1");
+lv_obj_set_style_text_color(ui_AppVersionLabel, lv_color_hex(0x69BCFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_opa(ui_AppVersionLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_AppVersionLabel, &lv_font_montserrat_18, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_AppCopyrightLabel = lv_label_create(ui_AboutTabPage);
@@ -185,7 +195,7 @@ lv_obj_set_height( ui_AppCopyrightLabel, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_AppCopyrightLabel, 0 );
 lv_obj_set_y( ui_AppCopyrightLabel, 28 );
 lv_label_set_text(ui_AppCopyrightLabel,"Copyright 2024 \nDr. Thorsten Ludewig\nt.ludewig@gmail.com");
-lv_obj_set_style_text_color(ui_AppCopyrightLabel, lv_color_hex(0xA0A0A0), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_color(ui_AppCopyrightLabel, lv_color_hex(0xE0E0E0), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_AppCopyrightLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_AppCopyrightLabel, &lv_font_montserrat_14, LV_PART_MAIN| LV_STATE_DEFAULT);
 
@@ -195,6 +205,8 @@ lv_obj_set_height( ui_AppLicenseLabel, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_AppLicenseLabel, 0 );
 lv_obj_set_y( ui_AppLicenseLabel, 84 );
 lv_label_set_text(ui_AppLicenseLabel,"License:");
+lv_obj_set_style_text_color(ui_AppLicenseLabel, lv_color_hex(0x69BCFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_opa(ui_AppLicenseLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_AppLicenseLabel, &lv_font_montserrat_14, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_Apache2LicenseLabel = lv_label_create(ui_AboutTabPage);
@@ -203,7 +215,7 @@ lv_obj_set_height( ui_Apache2LicenseLabel, LV_SIZE_CONTENT);   /// 1
 lv_obj_set_x( ui_Apache2LicenseLabel, 0 );
 lv_obj_set_y( ui_Apache2LicenseLabel, 104 );
 lv_label_set_text(ui_Apache2LicenseLabel,"Licensed under the Apache License, Version 2.0 (the \"License\");\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n      http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an \"AS IS\" BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions and\nlimitations under the License.\n");
-lv_obj_set_style_text_color(ui_Apache2LicenseLabel, lv_color_hex(0xA0A0A0), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_color(ui_Apache2LicenseLabel, lv_color_hex(0xE0E0E0), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_Apache2LicenseLabel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_Apache2LicenseLabel, &lv_font_montserrat_10, LV_PART_MAIN| LV_STATE_DEFAULT);
 

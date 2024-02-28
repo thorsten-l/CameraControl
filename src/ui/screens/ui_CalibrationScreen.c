@@ -23,8 +23,7 @@ lv_obj_set_style_text_font(ui_CalTitleLabel, &lv_font_montserrat_18, LV_PART_MAI
 ui_CalHomeButton = lv_btn_create(ui_CalibrationScreen);
 lv_obj_set_width( ui_CalHomeButton, 32);
 lv_obj_set_height( ui_CalHomeButton, 32);
-lv_obj_set_x( ui_CalHomeButton, 208 );
-lv_obj_set_y( ui_CalHomeButton, 0 );
+lv_obj_set_align( ui_CalHomeButton, LV_ALIGN_TOP_RIGHT );
 lv_obj_add_flag( ui_CalHomeButton, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
 lv_obj_clear_flag( ui_CalHomeButton, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_CalHomeButton, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
