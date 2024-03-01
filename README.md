@@ -18,6 +18,13 @@ The last thing I want to do is to implement the Picture Transfer Protocol via IP
 
 - [2432S028R - aliexpress.com](https://de.aliexpress.com/w/wholesale-2432S028R.html?spm=a2g0o.home.search.0)
 
+# Build environment
+
+- [PlatformIO](https://platformio.org/)
+  - [Choosing PlatformIO IDE for VSCode](https://platformio.org/install/ide?install=vscode)
+- [Visual Studio Code](https://code.visualstudio.com/)
+- [SquareLine Studio](https://squareline.io/) - UI Design
+
 # Screeshots
 
 ## Start screen
