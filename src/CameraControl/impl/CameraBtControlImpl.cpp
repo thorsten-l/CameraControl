@@ -17,7 +17,7 @@ String CameraBtControl::cameraName()
   return btCameraName;
 }
 
-String CameraBtControl::cameraAddress()
+String CameraBtControl::cameraMacAddress()
 {
   return canon_ble.getPairedAddressString();
 }

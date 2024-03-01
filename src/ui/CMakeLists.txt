@@ -1,6 +1,7 @@
 SET(SOURCES screens/ui_StartScreen.c
     screens/ui_BluetoothScreen.c
     screens/ui_CalibrationScreen.c
+    screens/ui_WiFiScreen.c
     ui.c
     components/ui_comp_hook.c
     ui_helpers.c

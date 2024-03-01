@@ -16,7 +16,7 @@ public:
 
   String apiName() override;
   String cameraName() override;
-  String cameraAddress() override;
+  String cameraMacAddress() override;
   int pairing() override;
   bool connect() override;
   bool isPaired();
@@ -27,5 +27,7 @@ public:
   bool shutterFullPressed(bool movieMode) override;
   bool widePressed() override;
   bool telePressed() override;
+  CameraControlType type() override { return CameraControlType::BT; };
+
   void handler();
 };

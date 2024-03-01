@@ -53,6 +53,15 @@ void Intervalometer::startButtonClicked(lv_event_t *e)
   intervalTime = getRollerDigitsValue(iRollerDigits, 3);
   exposureTime = getRollerDigitsValue(xRollerDigits, 3);
 
+  if ( cameraControl->type() == CameraControlType::BT )
+  {
+    shutterPauseTime = 250;
+  }
+  else
+  {
+    shutterPauseTime = 750;
+  }
+
   intervalTimeInMinutes = lv_roller_get_selected(ui_IURoller) == 1;
   exposureTimeInMinutes = lv_roller_get_selected(ui_XURoller) == 1;
 
@@ -213,7 +222,7 @@ void Intervalometer::handler()
     break;
 
   case IntervalState::IVT_RELEASE_SHUTTER:
-    if ((millis() - lastFullPressedTimestamp) >= SHUTTER_PAUSE_TIME)
+    if ((millis() - lastFullPressedTimestamp) >= shutterPauseTime)
     {
       shutterReleased();
       intervalState = IntervalState::IVT_RELEASE_SHUTTER_WAIT;
@@ -225,7 +234,7 @@ void Intervalometer::handler()
     break;
 
   case IntervalState::IVT_RELEASE_SHUTTER_WAIT:
-    if ((millis() - lastReleasedTimestamp) >= SHUTTER_PAUSE_TIME)
+    if ((millis() - lastReleasedTimestamp) >= shutterPauseTime)
     {
       intervalState = IntervalState::IVT_IDLE;
       if (pictureCounter > 0)
@@ -279,7 +288,7 @@ void Intervalometer::handler()
     break;
 
   case IntervalState::XPT_RELEASE_SHUTTER1:
-    if ((millis() - lastFullPressedTimestamp) >= SHUTTER_PAUSE_TIME)
+    if ((millis() - lastFullPressedTimestamp) >= shutterPauseTime)
     {
       shutterReleased();
       intervalState = IntervalState::XPT_RELEASE_SHUTTER1_WAIT;
@@ -301,7 +310,7 @@ void Intervalometer::handler()
     break;
 
   case IntervalState::XPT_RELEASE_SHUTTER2:
-    if ((millis() - lastFullPressedTimestamp) >= SHUTTER_PAUSE_TIME)
+    if ((millis() - lastFullPressedTimestamp) >= shutterPauseTime)
     {
       shutterReleased();
       intervalState = IntervalState::XPT_RELEASE_SHUTTER2_WAIT;

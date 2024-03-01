@@ -11,9 +11,19 @@ String CameraPtpControl::cameraName()
   return "-";
 }
 
-String CameraPtpControl::cameraAddress()
+String CameraPtpControl::cameraMacAddress()
 {
   return "-";
+}
+
+String CameraPtpControl::cameraSerialNumber()
+{
+  return "-";
+}
+
+String CameraPtpControl::cameraFirmwareVersion()
+{
+  return "0.8.15";
 }
 
 bool CameraPtpControl::connect(String ssid, String password)
@@ -71,3 +81,12 @@ bool CameraPtpControl::telePressed()
 
 void CameraPtpControl::handler() {}
 
+String CameraPtpControl::getDefaultCameraClientIpAddress()
+{
+  return "192.168.1.2";
+}
+
+String CameraPtpControl::getDefaultCameraClientIpPort()
+{
+  return "15740";
+}

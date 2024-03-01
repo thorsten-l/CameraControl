@@ -3,8 +3,6 @@
 #include <Arduino.h>
 #include <ui/ui.h>
 
-#define SHUTTER_PAUSE_TIME 250
-
 enum class IntervalState
 {
   IDLE,
@@ -29,6 +27,8 @@ private:
   IntervalState intervalState = IntervalState::IDLE;
 
   int pictureCounter = 0;
+
+  time_t shutterPauseTime = 0;
 
   time_t intervalTime = 0;
   time_t intervalTimeMillis = 0;

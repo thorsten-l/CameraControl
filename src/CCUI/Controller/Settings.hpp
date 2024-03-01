@@ -4,11 +4,8 @@
 #include <ArduinoNvs.h>
 #include <CameraControl/CameraControl.hpp>
 #include <ui/ui.h>
+#include <ArduinoNvs.h>
 
-extern CameraControlType wifiCameraControlType;
-
-extern void initializeSettings();
-extern void settingsHandler();
 
 class Settings
 {
@@ -20,4 +17,6 @@ public:
   void handler();
 };
 
+extern CameraControlType wifiCameraControlType;
 extern Settings settings;
+extern ArduinoNvs appNvs;

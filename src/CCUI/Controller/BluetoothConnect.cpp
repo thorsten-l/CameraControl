@@ -20,7 +20,7 @@ void btScreenLoaded(lv_event_t *e)
   else
   {
     lv_label_set_text(ui_BTCameraNameLabel, cameraControl->cameraName().c_str());
-    lv_label_set_text(ui_BTCameraAddressLabel, cameraControl->cameraAddress().c_str());
+    lv_label_set_text(ui_BTCameraAddressLabel, cameraControl->cameraMacAddress().c_str());
   }
 
   lv_label_set_text(ui_BTConnectLabel, cameraControl->isConnected()

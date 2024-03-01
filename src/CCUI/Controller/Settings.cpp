@@ -1,5 +1,4 @@
 #include <Arduino.h>
-#include <ArduinoNvs.h>
 
 #include <alog.h>
 #include <esp32_smartdisplay.h>
@@ -14,7 +13,7 @@ Settings settings;
 
 CameraControlType wifiCameraControlType;
 
-static ArduinoNvs appNvs;
+ArduinoNvs appNvs;
 
 static const lv_point_t full_touch_screen[] = {{0, 0}, {239, 160}, {120, 319}};
 static const lv_point_t predef_touch_screen[] = {
@@ -187,9 +186,6 @@ void Settings::initialize()
     touch_calibration_data = smartdisplay_compute_touch_calibration(
         full_touch_screen, predef_touch_screen);
   }
-
-  cameraControl = CameraControl::getInstance(CameraControlType::BT);
-  ALOG_D("Camera control API name: %s", cameraControl->apiName().c_str());
 
   smartdisplay_init();
   auto disp = lv_disp_get_default();

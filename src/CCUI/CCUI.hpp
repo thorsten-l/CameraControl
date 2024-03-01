@@ -41,6 +41,7 @@ public:
   void showHandlerMessageBoxRETURN(
     CCUIMessageBoxType type, const char *message, lv_event_cb_t eventCallback);
 
+  void initialize();
   void handler();
 };
 
